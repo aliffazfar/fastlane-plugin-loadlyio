@@ -1,4 +1,4 @@
-# Fastlane upload_to_loadly plugin
+# Fastlane plugin upload_to_loadly
 
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-loadlyio)
 
