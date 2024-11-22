@@ -56,7 +56,7 @@ module Fastlane
             elapsed = Time.now - started_at
             UI.message("#{spinner} Uploading... (#{format_time(elapsed)})")
             spinner_index += 1
-            sleep(0.9)
+            sleep(1)
           end
         end
 
