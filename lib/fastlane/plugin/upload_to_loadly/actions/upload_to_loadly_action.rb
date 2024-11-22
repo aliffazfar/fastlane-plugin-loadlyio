@@ -76,8 +76,8 @@ module Fastlane
           
           if data
             download_url = "#{LOADLY_FILE_LINK}/#{data['buildKey']}"
-            qr_code_url = "#{LOADLY_FILE_LINK}/#{data['buildQRCodeURL']}"
-            shortcut_url = data['buildShortcutUrl']
+            qr_code_url = data['buildQRCodeURL']
+            shortcut_url = "#{LOADLY_FILE_LINK}/#{data['buildShortcutUrl']}" 
             
             Actions.lane_context[SharedValues::UPLOADED_FILE_LINK_TO_LOADLY] = download_url
             Actions.lane_context[SharedValues::QR_CODE_URL_TO_LOADLY] = qr_code_url
