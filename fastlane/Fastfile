@@ -1,3 +1,9 @@
 lane :test do
-  loadlyio
+  
+  # Then upload to Loadly
+  upload_to_loadly(
+    api_key: ENV["LOADLY_API_KEY"],
+    file: "/Users/aliffazfar/Desktop/AnimeCatalogByAliff.apk",
+    build_description: "Android release"
+  )
 end
