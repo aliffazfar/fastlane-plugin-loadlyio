@@ -10,7 +10,7 @@ module Fastlane
           SHORTCUT_URL_TO_LOADLY = :SHORTCUT_URL_TO_LOADLY
       end
 
-      class LoadlyAction < Action
+      class UploadToLoadlyAction < Action
 
           UPLOAD_URL = "https://api.loadly.io/apiv2/app/upload"
           LOADLY_FILE_LINK = "https://i.loadly.io"
