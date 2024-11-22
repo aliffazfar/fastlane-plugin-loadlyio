@@ -31,6 +31,9 @@ module Fastlane
                   return
               end
 
+              file_size = File.size(options[:file])
+              file_name = File.basename(options[:file])
+
               upload_options = {
                   _api_key: options[:api_key],
                   buildPassword: options[:build_password],
@@ -40,13 +43,26 @@ module Fastlane
 
               timeout = options[:timeout]
 
-              UI.success("Start uploading file to loadly. Please, be patient. This could take some time.")
+              UI.message("📦 Preparing to upload #{file_name} (#{format_size(file_size)})")
+              UI.message("⏳ Initializing upload to Loadly.io...")
 
+              started_at = Time.now
+              spinner_chars = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
+              spinner_index = 0
+              
               response = RestClient::Request.execute(
                   method: :post,
                   url: UPLOAD_URL,
                   timeout: timeout,
-                  payload: upload_options
+                  payload: upload_options,
+                  block_response: proc { |response|
+                      if Time.now - started_at > spinner_index
+                          spinner_index += 1
+                          spinner = spinner_chars[spinner_index % spinner_chars.length]
+                          elapsed = Time.now - started_at
+                          UI.message("#{spinner} Uploading... (#{format_time(elapsed)})")
+                      end
+                  }
               )
 
               begin
@@ -70,7 +86,8 @@ module Fastlane
                   Actions.lane_context[SharedValues::QR_CODE_URL_TO_LOADLY] = qr_code_url
                   Actions.lane_context[SharedValues::SHORTCUT_URL_TO_LOADLY] = shortcut_url
                   
-                  UI.success("✅ Upload completed successfully.")
+                  total_time = Time.now - started_at
+                  UI.success("✅ Upload completed successfully in #{format_time(total_time)}")
                   UI.success("📱 Install URLs:")
                   UI.message("   • Download URL:  #{download_url}")
                   UI.message("   • Shortcut URL: #{shortcut_url}")
@@ -83,6 +100,32 @@ module Fastlane
                   
                   return
               end
+
+
+          def self.format_size(size_in_bytes)
+              units = ['B', 'KB', 'MB', 'GB']
+              unit_index = 0
+              size = size_in_bytes.to_f
+
+              while size > 1024 && unit_index < units.length - 1
+                  size /= 1024
+                  unit_index += 1
+              end
+
+              "%.2f %s" % [size, units[unit_index]]
+          end
+
+          def self.format_time(seconds)
+              if seconds < 60
+                  "#{seconds.round}s"
+              elsif seconds < 3600
+                  minutes = (seconds / 60).floor
+                  remaining_seconds = (seconds % 60).round
+                  "#{minutes}m #{remaining_seconds}s"
+              else
+                  hours = (seconds / 3600).floor
+                  remaining_minutes = ((seconds % 3600) / 60).floor
+                  "#{hours}h #{remaining_minutes}m"
           end
 
           def self.callback(url, data)
