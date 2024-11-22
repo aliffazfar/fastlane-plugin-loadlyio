@@ -1,5 +1,5 @@
 module Fastlane
-  module Loadlyio
+  module UploadToLoadly
     VERSION = "0.1.0"
   end
 end

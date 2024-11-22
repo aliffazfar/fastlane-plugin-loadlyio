@@ -1,6 +1,6 @@
 lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'fastlane/plugin/upload_to_loadly/version'
+require 'fastlane/plugin/loadlyio/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'fastlane-plugin-upload_to_loadly'

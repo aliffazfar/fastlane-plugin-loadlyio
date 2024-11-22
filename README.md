@@ -10,6 +10,12 @@ This project is a [_fastlane_](https://github.com/fastlane/fastlane) plugin. To 
 fastlane add_plugin upload_to_loadly
 ```
 
+Or you can add it directly on your Pluginfile
+
+```ruby
+gem "fastlane-plugin-upload_to_loadly", git: "https://github.com/aliffazfar/fastlane-plugin-loadlyio"
+```
+
 ## About upload_to_loadly
 
 Loadly.io is the ultimate platform for app beta testing and distribution, offering unlimited app uploads and downloads, enhanced security, detailed analytics, and seamless integration. Alternative to TestFlight and Diawi
